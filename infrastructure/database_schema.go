@@ -34,3 +34,9 @@ type Room struct {
 	CurrentBlockName  string             `json:"current_block_name" bson:"current_block_name" binding:"required"`
 	CurrentNoOfBeds   int                `json:"current_no_of_beds" bson:"current_no_of_beds" binding:"required"`
 }
+type RoomRequest struct {
+	ID          primitive.ObjectID `bson:"_id"  binding:"required"`
+	RequestedBy primitive.ObjectID `json:"requested_by" binding:"required"`
+	RequestedTo primitive.ObjectID `json:"requested_to" binding:"required"`
+	CreatedAt   time.Time          `bson:"created_at" binding:"required"`
+}

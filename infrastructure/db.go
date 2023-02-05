@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -15,7 +16,7 @@ type Database struct {
 
 func NewDatabase() Database {
 
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://127.0.0.1:27017/hostel_hopper"))
+	client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("MONGO_DB_URL")))
 	if err != nil {
 		panic(err.Error())
 	}
