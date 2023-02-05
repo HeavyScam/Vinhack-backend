@@ -46,6 +46,21 @@ func main() {
 	authRouter.GET("/get-rooms", func(c *gin.Context) {
 		api.GetAllRooms(c, &database)
 	})
+	authRouter.GET("/get-room-request-warden", func(c *gin.Context) {
+		api.GetAllRoomRequests(c, &database)
+	})
+	authRouter.GET("/get-requested-room", func(c *gin.Context) {
+		api.GetRequestedRoom(c, &database)
+	})
+	authRouter.POST("/request-room", func(c *gin.Context) {
+		api.RequestRoom(c, &database)
+	})
+	authRouter.POST("/accept-room", func(c *gin.Context) {
+		api.AcceptRoom(c, &database)
+	})
+	authRouter.POST("/accept-room-warden", func(c *gin.Context) {
+		api.AcceptRoomWarden(c, &database)
+	})
 
 	router.Run(":8000")
 

@@ -46,14 +46,26 @@ func RequestRoom(ctx *gin.Context, database *databasePackage.Database) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid input"})
 		return
 	}
-
-	// match := bson.M{"_id": userID}
-
-	// _, updateErr := collection.UpdateOne(ctx, match, )
-	// if updateErr != nil {
-	// 	ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to add db"})
-	// 	return
-	// }
+	requested_by, err := primitive.ObjectIDFromHex(requestRoomRequest.RequestedBy)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid Requested By id"})
+		return
+	}
+	requested_to, err := primitive.ObjectIDFromHex(requestRoomRequest.RequestedTo)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "invalid Requested to id"})
+		return
+	}
+	requestCollection := database.MongoClient.Database("hostel_hopper").Collection("room_requests")
+	_, err = requestCollection.InsertOne(ctx, databasePackage.RoomRequest{
+		ID:          primitive.NewObjectID(),
+		RequestedBy: requested_by,
+		RequestedTo: requested_to,
+	})
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Unable add request to db"})
+		return
+	}
 	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
 
 }

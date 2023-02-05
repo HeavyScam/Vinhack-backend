@@ -26,7 +26,7 @@ type Preferences struct {
 	NumberOfBeds int    `json:"no_of_beds" bson:"no_of_beds" binding:"required"`
 }
 type Room struct {
-	UserID            primitive.ObjectID `bson:"_id"  binding:"required"`
+	UserID            primitive.ObjectID `json:"user_id" bson:"_id"  binding:"required"`
 	InitialRoomNumber string             `json:"initial_room_number" bson:"initial_room_number"  binding:"required"`
 	InitialBlockName  string             `json:"initial_block_name" bson:"initial_block_name" binding:"required"`
 	InitialNoOfBeds   int                `json:"initial_no_of_beds" bson:"initial_no_of_beds" binding:"required"`
@@ -35,8 +35,8 @@ type Room struct {
 	CurrentNoOfBeds   int                `json:"current_no_of_beds" bson:"current_no_of_beds" binding:"required"`
 }
 type RoomRequest struct {
-	ID          primitive.ObjectID `bson:"_id"  binding:"required"`
-	RequestedBy primitive.ObjectID `json:"requested_by" binding:"required"`
-	RequestedTo primitive.ObjectID `json:"requested_to" binding:"required"`
-	CreatedAt   time.Time          `bson:"created_at" binding:"required"`
+	ID          primitive.ObjectID `bson:"_id" json:"request_id"  binding:"required"`
+	RequestedBy primitive.ObjectID `json:"requested_by" bson:"requested_by" binding:"required"`
+	RequestedTo primitive.ObjectID `json:"requested_to" bson:"requested_to" binding:"required"`
+	CreatedAt   time.Time          `json:"created_at" bson:"created_at" binding:"required"`
 }
